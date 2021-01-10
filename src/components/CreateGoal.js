@@ -6,77 +6,45 @@ import {produce} from "immer"
 
 export default function CreateDiaryEntry(){
 
-  const [username, setusername] = useState("")
-  const [description, setdescription] = useState("")
-  const [duration, setduration] = useState(0)
+  const [title, setTitle] = useState("")
+  const [description, setDescription] = useState("")
+  const [mileStones, setMilestones] = useState([])
   const [date, setdate] = useState(new Date())
-  const [users, setusers] = useState([])
-  let testExercise = {
-    username: "test1",
+  const [Goal, testGoal] = useState({
+    title: "test1",
     description: "test2",
-    duration: 111,
-    date: new Date()}
+    date: new Date(),
+    milestone: "testMileStone"
+  })
+ 
 
-  const [exercise, setexercise] = useState(
-      {username: "test2",
-      description: "test2",
-      duration: 222,
-      date: new Date()})
 
-  useEffect(() => {
-    axios.get('http://localhost:5000/users/')
-      .then(response => {
-        if (response.data.length > 0) {
-          setusers(response.data.map(user => user.username))
-          setusername(response.data[0].username)
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-      })
-
-  },[])
-
-  function onChangeUsername(e) {
-    setusername(e.target.value)
-    setexercise({...exercise,  username: e.target.value})
-  //   produce(exercise, draftexercise => {
-  //     draftexercise.username = (e.target.value)
-  // })
+  function onChangeTitle(e) {
+    setTitle(e.target.value)
+    setGoal({...goal,  title: e.target.value})
 }
-    //setexercise({...exercise,  username: e.target.value})
-  
 
   function onChangeDescription(e) {
-    setdescription(e.target.value)
-    setexercise({...exercise,  description: e.target.value})
-  //   produce(exercise, draftexercise => {
-  //     draftexercise.description = (e.target.value)
-  // })
+    setDescription(e.target.value)
+    setGoal({...goal,  description: e.target.value})
   }
 
-  function onChangeDuration(e) {
-    setduration(parseInt(e.target.value))
-    setexercise({...exercise,  duration: parseInt(e.target.value)})
-  //   produce(exercise, draftexercise => {
-  //     draftexercise.duration = (e.target.value)
-  // })
+  function onChangeMilestone(e) {
+    setmilestone(parseInt(e.target.value))
+    setGoal({...goal,  milestone: parseInt(e.target.value)})
   }
 
   function onChangeDate(date) {
     setdate(date)
-    setexercise({...exercise,  date: date})
-  //   produce(exercise, draftexercise => {
-  //     draftexercise.date = (date)
-  // })
+    setGoal({...goal,  date: date})
   }
+
 
   function onSubmit(e) {
     e.preventDefault();
+    console.log(goal);
 
-    console.log(exercise);
-
-    axios.post('http://localhost:5000/exercises/add', exercise)
+    axios.post('http://localhost:5000/goals/add', goal)
       .then(res => console.log(res.data));
 
     window.location = '/';
@@ -84,26 +52,20 @@ export default function CreateDiaryEntry(){
 
     return (
     <div>
-      <h3>Create New Exercise Log</h3>
+      <h3>Create New Goal</h3>
       <form onSubmit={onSubmit}>
+
         <div className="form-group"> 
-          <label>Username: </label>
+          <label>Title: </label>
           <select 
             // ref="userInput"
               required
-              className="form-control"
-              value={username}
-              onChange={onChangeUsername}>
-              {
-                users.map(function(user) {
-                  return <option 
-                    key={user}
-                    value={user}>{user}
-                    </option>;
-                })
-              }
+              className="text"
+              value={title}
+              onChange={onChangeTitle}>
           </select>
         </div>
+
         <div className="form-group"> 
           <label>Description: </label>
           <input  type="text"
@@ -113,17 +75,19 @@ export default function CreateDiaryEntry(){
               onChange={onChangeDescription}
               />
         </div>
+
         <div className="form-group">
-          <label>Duration (in minutes): </label>
+          <label>Add a milestone </label>
           <input 
               type="text" 
               className="form-control"
-              value={duration}
-              onChange={onChangeDuration}
+              value={milestone}
+              onChange={onChangeMilestone}
               />
         </div>
+
         <div className="form-group">
-          <label>Date: </label>
+          <label>Completed by: </label>
           <div>
             <DatePicker
               selected={date}
@@ -133,7 +97,7 @@ export default function CreateDiaryEntry(){
         </div>
 
         <div className="form-group">
-          <input type="submit" value="Create Exercise Log" className="btn btn-primary" />
+          <input type="submit" value="Create goal Log" className="btn btn-primary" />
         </div>
       </form>
     </div>

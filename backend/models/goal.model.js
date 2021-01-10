@@ -5,8 +5,8 @@ const Schema = mongoose.Schema;
 const goalSchema = new Schema({
     title:{type: String, required: true},
     description:{type: String, required: true},
-    endDate:{type: Date, required: true},
-    milestones : [{title : String}]
+    //endDate:{type: Date},
+    milestones : {type: String, required: true}
 },{
     timestamps: true
 })
