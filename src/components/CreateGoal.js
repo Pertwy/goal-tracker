@@ -5,88 +5,74 @@ import "react-datepicker/dist/react-datepicker.css";
 import {produce} from "immer"
 
 export default function CreateDiaryEntry(){
-
-  const [title, setTitle] = useState("")
-  const [description, setDescription] = useState("")
-  const [milestones, setMilestones] = useState([])
-  const [date, setdate] = useState(new Date())
+  const [goals, setGoals] = useState([])
   const [goal, setGoal] = useState({
     title: "test1",
     description: "test2",
-    date: new Date(),
-    milestone: "testMileStone"
+    // date: new Date(),
+    milestones: "testMileStone"
   })
- 
+  
+
+  const handleChange = (e) => {
+    const name = e.target.name;
+    const value = e.target.value;
+    setGoal({ ...goal, [name]: value });
+  };
 
 
-  function onChangeTitle(e) {
-    setTitle(e.target.value)
-    setGoal({...goal,  title: e.target.value})
-}
-
-  function onChangeDescription(e) {
-    setDescription(e.target.value)
-    setGoal({...goal,  description: e.target.value})
-  }
-
-  function onChangeMilestone(e) {
-    setMilestones(parseInt(e.target.value))
-    setGoal({...goal,  milestone: parseInt(e.target.value)})
-  }
-
-  function onChangeDate(date) {
-    setdate(date)
-    setGoal({...goal,  date: date})
-  }
-
-
-  function onSubmit(e) {
+  function handleSubmit(e) {
     e.preventDefault();
     console.log(goal);
 
     axios.post('http://localhost:5000/goals/add', goal)
       .then(res => console.log(res.data));
 
-    window.location = '/';
+    // window.location = '/';
   }
 
     return (
     <div>
       <h3>Create New Goal</h3>
-      <form onSubmit={onSubmit}>
-
+      <form>
         <div className="form-group"> 
-          <label>Title: </label>
-          <select 
-            // ref="userInput"
+          <label htmlFor='title'>Title: </label>
+          <input
+              type="text"
+              id='title'
+              name='title'
               required
-              className="text"
-              value={title}
-              onChange={onChangeTitle}>
-          </select>
+              className="form-control"
+              value={goal.title}
+              onChange={handleChange}/>
         </div>
 
         <div className="form-group"> 
-          <label>Description: </label>
-          <input  type="text"
+          <label htmlFor='description'>Description: </label>
+          <input  
+              type="text"
+              id='description'
+              name='description'
               required
               className="form-control"
-              value={description}
-              onChange={onChangeDescription}
+              value={goal.description}
+              onChange={handleChange}
               />
         </div>
 
         <div className="form-group">
-          <label>Add a milestone </label>
+          <label htmlFor='milestones'>Add a milestones </label>
           <input 
               type="text" 
+              id='milestones'
+              name='milestones'
               className="form-control"
-              value={milestones}
-              onChange={onChangeMilestone}
+              value={goal.milestones}
+              onChange={handleChange}
               />
         </div>
 
-        <div className="form-group">
+        {/* <div className="form-group">
           <label>Completed by: </label>
           <div>
             <DatePicker
@@ -94,11 +80,11 @@ export default function CreateDiaryEntry(){
               onChange={onChangeDate}
             />
           </div>
-        </div>
+        </div> */}
 
-        <div className="form-group">
-          <input type="submit" value="Create goal Log" className="btn btn-primary" />
-        </div>
+          <button type='submit' className='btn' onClick={handleSubmit}>
+            add person
+          </button>
       </form>
     </div>
     )

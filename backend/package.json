@@ -16,5 +16,10 @@
   "bugs": {
     "url": "https://github.com/Pertwy/goal-tracker/issues"
   },
-  "homepage": "https://github.com/Pertwy/goal-tracker#readme"
+  "homepage": "https://github.com/Pertwy/goal-tracker#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "mongoose": "^5.11.12",
+    "nodemon": "^2.0.7"
+  }
 }
