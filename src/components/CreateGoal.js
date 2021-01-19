@@ -8,9 +8,9 @@ export default function CreateDiaryEntry(){
 
   const [title, setTitle] = useState("")
   const [description, setDescription] = useState("")
-  const [mileStones, setMilestones] = useState([])
+  const [milestones, setMilestones] = useState([])
   const [date, setdate] = useState(new Date())
-  const [Goal, testGoal] = useState({
+  const [goal, setGoal] = useState({
     title: "test1",
     description: "test2",
     date: new Date(),
@@ -30,7 +30,7 @@ export default function CreateDiaryEntry(){
   }
 
   function onChangeMilestone(e) {
-    setmilestone(parseInt(e.target.value))
+    setMilestones(parseInt(e.target.value))
     setGoal({...goal,  milestone: parseInt(e.target.value)})
   }
 
@@ -81,7 +81,7 @@ export default function CreateDiaryEntry(){
           <input 
               type="text" 
               className="form-control"
-              value={milestone}
+              value={milestones}
               onChange={onChangeMilestone}
               />
         </div>
