@@ -5,6 +5,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Navbar from "./components/Navbar"
 import CreateGoal from "./components/CreateGoal"
 import CreateDiaryEntry from "./components/CreateDiaryEntry"
+import EntryList from "./components/EntryList"
 
 function App() {
   return (
@@ -12,7 +13,7 @@ function App() {
       <div className="container">
       <Navbar />
       <br/>
-      {/* <Route path="/" exact component={AllList} /> */}
+      <Route path="/" exact component={EntryList} />
       <Route path="/creategoal" component={CreateGoal} />
       <Route path="/creatediary" component={CreateDiaryEntry} />
  
